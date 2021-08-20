@@ -1,2 +1,1 @@
-# sistem-perpustakaan
-pengelolaan buku dan anggota
+# sistem_informasi_perpustakaan
