@@ -153,7 +153,7 @@ $books=query("SELECT * FROM tbbuku ORDER BY idbuku");
                 <td><?= ucfirst($book['penulisbuku']); ?></td>
                 <td><?= $book['kategori']; ?></td>
                 <td class="text-center">
-                <button type="button" class="btn btn-success btn-sm">Edit</button>
+                <a href="edit-buku.php?idbuku=<?= $book['idbuku']; ?>"><button type="button" class="btn btn-success btn-sm">Edit</button></a>
                 <a href="hapus-buku.php?idbuku=<?= $book['idbuku']; ?>"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
                 </td>
               </tr>

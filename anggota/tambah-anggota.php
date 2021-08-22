@@ -93,13 +93,13 @@ if(isset($_POST['tambah'])){
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../buku/daftar-buku.php" class="nav-link active">
+                <a href="../buku/daftar-buku.php" class="nav-link ">
                   <i class="fas fa-book-open nav-icon"></i>
                   <p>Daftar Buku</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../anggota/daftar-anggota.php" class="nav-link ">
+                <a href="../anggota/daftar-anggota.php" class="nav-link active">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Daftar Anggota</p>
                 </a>
@@ -150,12 +150,12 @@ if(isset($_POST['tambah'])){
                   <div class="form-group ">
                   <label for="">Jenis Kelamin</label>
                         <div class="form-check">
-                          <input class="form-check-input" type="radio" name="jeniskelamin" value="Laki-laki">
-                          <label class="form-check-label">Laki-laki</label>
+                          <input class="form-check-input" type="radio" name="jeniskelamin" id="laki-laki" value="Laki-laki" checked>
+                          <label class="form-check-label" for="laki-laki">Laki-laki</label>
                         </div>
                         <div class="form-check">
-                          <input class="form-check-input" type="radio" name="jeniskelamin" value="Perempuan">
-                          <label class="form-check-label mb-2">Perempuan</label>
+                          <input class="form-check-input" type="radio" id="perempuan" name="jeniskelamin" value="Perempuan">
+                          <label class="form-check-label mb-2 " for="perempuan">Perempuan</label>
                         </div>
                   <div class="form-group">
                     <label for="alamat">Alamat</label>

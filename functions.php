@@ -68,4 +68,33 @@
     return mysqli_affected_rows($conn);
   }
 
+  function editBuku($data){
+    $conn=koneksi();
+    $id=htmlspecialchars($data['idbuku']);
+    $judul=htmlspecialchars($data['judulbuku']);
+    $tahun=htmlspecialchars($data['tahunbuku']);
+    $penulis=htmlspecialchars($data['penulisbuku']);
+    $kategori=htmlspecialchars($data['kategori']);  
+    $query=("UPDATE tbbuku SET judulbuku='$judul',tahunbuku=$tahun,penulisbuku='$penulis',kategori='$kategori' WHERE idbuku='$id'");
+
+    mysqli_query($conn,$query);
+    echo mysqli_error($conn);
+    return mysqli_affected_rows($conn);
+    
+  }
+  function editAnggota($data){
+    $conn=koneksi();
+    $id=htmlspecialchars($data['idanggota']);
+    $nama=htmlspecialchars($data['namaanggota']);
+    $jenisKelamin=htmlspecialchars($data['jeniskelamin']);
+    $alamat=htmlspecialchars($data['alamat']);
+    $foto=htmlspecialchars($data['foto']);  
+    $query = ("UPDATE tbanggota SET nama='$nama',jeniskelamin='$jenisKelamin',alamat='$alamat',foto='$foto' WHERE idanggota='$id'");
+
+    mysqli_query($conn,$query);
+
+    echo mysqli_error($conn);
+    return mysqli_affected_rows($conn);
+
+  }
 ?>

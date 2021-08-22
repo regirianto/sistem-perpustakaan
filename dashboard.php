@@ -1,3 +1,15 @@
+<?php 
+
+require './functions.php';
+
+$jmlbuku=query("SELECT judulbuku FROM tbbuku");
+$jmlanggota=query("SELECT idanggota FROM tbanggota");
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,45 +125,32 @@
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
+        <div class="row justify-content-center">
+          <div class="col-lg-4 col">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3><?= count($jmlbuku); ?></h3>
 
-                <p>New Orders</p>
+                <p>Jumlah Buku</p>
               </div>
               <div class="icon">
                 <i class="fas fa-book"></i>
                 
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="./buku/daftar-buku.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
-          <div class="col-lg-3 col-6">
+          
+          <!-- ./col -->
+          <div class="col-lg-4 col">
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3><?= count($jmlanggota); ?></h3>
 
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
-
-                <p>User Registrations</p>
+                <p>Jumlah Anggota</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -160,7 +159,7 @@
             </div>
           </div>
           <!-- ./col -->
-          <div class="col-lg-3 col-6">
+          <div class="col-lg-4 col">
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">

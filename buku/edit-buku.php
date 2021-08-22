@@ -1,8 +1,18 @@
 <?php 
-
   require '../functions.php';
-  $anggota =query("SELECT * FROM tbanggota ORDER BY idanggota");
-// var_dump($anggota);
+  $idbuku=$_GET['idbuku'];
+
+    $book =query("SELECT * FROM tbbuku WHERE idbuku = '$idbuku' ")[0];
+    if(isset($_POST['edit'])){
+        if (editBuku($_POST) >0 ){
+        echo "<script>alert('Data Berhasil Di tambah');
+        document.location.href ='daftar-buku.php';
+        </script>";
+      }else{
+        echo "script>alert('Data Gagal Di tambahkan');</script>";
+    }
+        }
+    
 ?>
 
 
@@ -33,11 +43,11 @@
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
-</head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader -->
+
+
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -52,7 +62,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-   
+  
 
     <!-- Sidebar -->
       
@@ -68,7 +78,7 @@
             <a href="#" class="nav-link active">
             <i class="nav-icon fas fa-chevron-circle-down"></i>
               <p>
-              Menu
+                Menu
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -80,13 +90,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../buku/daftar-buku.php" class="nav-link">
+                <a href="./daftar-buku.php" class="nav-link active">
                   <i class="fas fa-book-open nav-icon"></i>
                   <p>Daftar Buku</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./anggota/daftar-anggota.php" class="nav-link active">
+                <a href="../anggota/daftar-anggota.php" class="nav-link ">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Daftar Anggota</p>
                 </a>
@@ -104,82 +114,59 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+   <!-- Content Wrapper. Contains page content -->
+   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h3>Daftar Anggota</h3>
-
-            <div class="card-tools">
-              <div class="input-group input-group-sm" style="width: 350px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <a href="./tambah-anggota.php"><button type="button" class="btn btn-primary">Tambah Anggota <i class="fas fa-plus pl-2" ></i></button></a>
-
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-              <thead class="text-center">
-
-              
-                <tr>
-                  <th>ID Anggota</th>
-                  <th>Nama</th>
-                  <th>Jenis Kelamin</th>
-                  <th>Alamat</th>
-                  <th>Foto</th>
-                  <th>Aksi</th>
-                </tr>
-
-                
-              </thead>
-              <tbody  class="text-center">
-
-              <?php foreach ($anggota as $m) : ?>
-                <tr>
-                  <td><?= $m['idanggota']; ?></td>
-                  <td><?= $m['nama']; ?></td>
-                  <td><?= $m['jeniskelamin']; ?></td>
-                  <td><?= $m['alamat']; ?></td>
-                  <td><img src="../asset/img/person.png" style="width: 30px;" alt=""></td>
-                  <td>
-                  <a href="edit-anggota.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-success btn-sm">Edit</button></a>
-                  <a href=""><button type="button" class="btn btn-secondary btn-sm">Cetak Kartu</button></a>
-                  <a href="hapus-anggota.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
-                </td>
-                </tr>
-                <?php endforeach ?>
-              <?php  ?>
-                
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-      </div>
+    <div class="content-header">
     </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <!-- Main content -->
+      <div class="container mt-1 mb-3">
+        <div class="row justify-content-center">
+          <!-- left column -->
+          <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Form Edit Buku</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="" method="POST">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="idbuku">ID Buku</label>
+                    <input type="text" class="form-control" id="idbuku" placeholder="Masukan ID Buku" name="idbuku" value="<?= $book['idbuku']; ?>" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="judulbuku">Judul Buku</label>
+                    <input type="text" class="form-control" id="judulbuku" placeholder="Masukan Judul Buku" name="judulbuku" required value="<?= $book['judulbuku']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="tahunbuku">Tahun Buku</label>
+                    <input type="number" class="form-control" id="tahunbuku" placeholder="Masukan Tahun Terbit Buku" min="1000" name="tahunbuku" required  value="<?= $book['tahunbuku']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="penulisbuku">Penulis Buku</label>
+                    <input type="text" class="form-control" id="penulisbuku" placeholder="Masukan Penulis Buku" name="penulisbuku" required value="<?= $book['penulisbuku']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="kategori">Kategori Buku</label>
+                    <input type="text" class="form-control" id="kategori" placeholder="Masukan Kategori Buku" name="kategori" value="<?= $book['kategori']; ?>" required>
+                  </div>                  
+                  <button type="submit" class="btn btn-primary" name="edit">Simpan</button>
+                </div>
 
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+
+    <!-- akhir dari daftar buku  -->
+   
+        
 </div>
-<!-- ./wrapper -->
+
+
 
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
