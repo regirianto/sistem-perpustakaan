@@ -1,15 +1,24 @@
 <?php 
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: .../index.php");
+  exit;
+}
 require '../functions.php';
 
 
 if(isset($_POST['tambah'])){
-
-  if(tambahAnggota($_POST,'tbanggota') > 0){
+  // var_dump($_POST);
+  // var_dump($_FILES);
+  // die;
+  if(tambahAnggota($_POST) > 0){
     echo "<script>alert('Data Berhasil Di tambah');
           document.location.href ='daftar-anggota.php';
           </script>";
   }else{
-    echo "<script>alert('Data Gagal Di tambahkan');</script>";
+    echo "<script>alert('Data Gagal Di tambahkan');
+          document.location.href ='tambah-anggota.php';      
+          </script>";
   }
 }
 // var_dump($books);
@@ -105,7 +114,7 @@ if(isset($_POST['tambah'])){
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="../logout.php" class="nav-link">
                 <i class="fas fa-sign-out-alt ml-1"></i>
                 <p>Logout</p>
                 </a>
@@ -137,11 +146,11 @@ if(isset($_POST['tambah'])){
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="" method="POST">
+              <form action="" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="idanggota">ID Anggota</label>
-                    <input type="text" class="form-control" id="idbuku" placeholder="Masukan ID Anggota" name="idanggota" required>
+                    <input type="text" class="form-control" id="idbuku" placeholder="Masukan ID Anggota" name="idanggota" required maxlength="5">
                   </div>
                   <div class="form-group">
                     <label for="namaanggota">Nama Anggota</label>
@@ -162,11 +171,15 @@ if(isset($_POST['tambah'])){
                     <input type="text" class="form-control" id="alamat" placeholder="Masukan Penulis Buku" name="alamat" required>
                   </div>
                   <div class="form-group">
-                    <label for="">Foto</label><br>
-                    <input type="file"  id="foto" placeholder="Masukan foto Buku" name="foto">
+                    <img src="../asset/img/nofoto.png" alt="" class="ml-3  img-preview" width="60px" style="display: block;" >
+                    <label for="foto">Foto</label><br>
+                    <input type="file" id="foto" name="foto" onchange="previewimage()" class="gambar-uploud">
                   </div>                  
-                  <button type="submit" class="btn btn-primary" name="tambah">Tambah Buku</button>
+                  <button type="submit" class="btn btn-primary" name="tambah">Tambah</button>
                 </div>
+              </div>
+            </form>
+
 
 
 
@@ -176,7 +189,7 @@ if(isset($_POST['tambah'])){
 </div>
 
 
-
+<script src="../asset/js/myscript.js"></script>
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>

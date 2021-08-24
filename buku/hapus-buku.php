@@ -1,4 +1,9 @@
 <?php 
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: .../index.php");
+  exit;
+}
 require '../functions.php';
 $idbuku=$_GET['idbuku'];
   if(isset($_GET['idbuku'])){

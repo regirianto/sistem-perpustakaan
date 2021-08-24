@@ -1,4 +1,9 @@
 <?php 
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: .../index.php");
+  exit;
+}
 require '../functions.php';
 
 
@@ -105,7 +110,7 @@ if(isset($_POST['tambah'])){
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="../logout.php" class="nav-link">
                 <i class="fas fa-sign-out-alt ml-1"></i>
                 <p>Logout</p>
                 </a>
@@ -141,7 +146,7 @@ if(isset($_POST['tambah'])){
                 <div class="card-body">
                   <div class="form-group">
                     <label for="idbuku">ID Buku</label>
-                    <input type="text" class="form-control" id="idbuku" placeholder="Masukan ID Buku" name="idbuku" required>
+                    <input type="text" class="form-control" id="idbuku" placeholder="Masukan ID Buku" name="idbuku" required maxlength="5">
                   </div>
                   <div class="form-group">
                     <label for="judulbuku">Judul Buku</label>
@@ -149,7 +154,7 @@ if(isset($_POST['tambah'])){
                   </div>
                   <div class="form-group">
                     <label for="tahunbuku">Tahun Buku</label>
-                    <input type="number" class="form-control" id="tahunbuku" placeholder="Masukan Tahun Terbit Buku" min="1000" name="tahunbuku" required>
+                    <input type="number" class="form-control" id="tahunbuku" placeholder="Masukan Tahun Terbit Buku" min="1000" name="tahunbuku"  required >
                   </div>
                   <div class="form-group">
                     <label for="penulisbuku">Penulis Buku</label>

@@ -1,3 +1,43 @@
+<?php 
+session_start();
+
+
+if(isset($_SESSION["login"])){
+  header("location: dashboard.php");
+  exit;
+}
+
+require './functions.php';
+if(isset($_POST['login'])){
+  $conn=koneksi();  
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+
+    $result=mysqli_query($conn,"SELECT * FROM tbadmin WHERE username = '$username' ");
+
+    if(mysqli_num_rows($result) === 1){
+
+      $row=mysqli_fetch_assoc($result);
+     if($password === $row['password']){
+       $_SESSION["login"]=true;
+        header("location: dashboard.php");
+        exit;
+
+
+     }else{
+      echo '<script>alert("anda gagal login");</script>';
+     }
+      
+    }
+
+    else{
+      echo '<script>alert("anda gagal login");</script>';
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,21 +78,16 @@
      <div class="col-md ">
      <div class="row justify-content-center ">
       <div class="col-md-4">
-      <form class="form-signin shadow-lg p-3 rounded-lg">
+      <form class="shadow-lg p-3 rounded-lg" method="POST" action="">
       <i class="fas fa-book-reader text-primary"></i>
       <h1 class="h3 mb-3 font-weight-normal">Sistem Informasi Perpustakaan</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <div class="checkbox mb-3">
+      <input type="text" id="username" class="form-control mb-2" placeholder="Username" name="username">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password">
+      <div class="checkbox mb-2">
         <label>
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">Masuk</button>
-      <p><a href="" class="text-secondary">Daftar</a></p>
-      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
-
+      <button class="btn btn-lg btn-primary btn-block mb-3" type="submit" name="login">Masuk</button>
     </form>
       </div>
     </div>

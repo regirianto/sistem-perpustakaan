@@ -1,5 +1,9 @@
 <?php 
-
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: ../index.php");
+  exit;
+}
   require "functions.php";
 
   //mengambil id dari url
@@ -106,6 +110,12 @@
                 <a href="./anggota/daftar-anggota.php" class="nav-link active">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Daftar Anggota</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../logout.php" class="nav-link">
+                <i class="fas fa-sign-out-alt ml-1"></i>
+                <p>Logout</p>
                 </a>
               </li>
             </ul>   

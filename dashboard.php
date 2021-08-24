@@ -1,6 +1,13 @@
 <?php 
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: index.php");
+  exit;
+}
+
 
 require './functions.php';
+
 
 $jmlbuku=query("SELECT judulbuku FROM tbbuku");
 $jmlanggota=query("SELECT idanggota FROM tbanggota");
@@ -8,7 +15,6 @@ $jmlanggota=query("SELECT idanggota FROM tbanggota");
 
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +101,7 @@ $jmlanggota=query("SELECT idanggota FROM tbanggota");
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="./logout.php" class="nav-link">
                 <i class="fas fa-sign-out-alt ml-1"></i>
                 <p>Logout</p>
                 </a>

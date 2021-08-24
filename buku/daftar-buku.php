@@ -1,7 +1,54 @@
 <?php 
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: .../index.php");
+  exit;
+}
 require '../functions.php';
 
-$books=query("SELECT * FROM tbbuku ORDER BY idbuku");
+
+if(isset($_POST['cari'])){
+  $books=query("SELECT * FROM tbbuku ORDER BY idbuku");
+  $books=cariBuku($_POST['pencarian']);
+  $halamanAktif=1;
+  $jmlhalaman=1;
+    if($_POST['pencarian'] === ''){
+  $jmlkolom=5;
+  $jmldata=count(query('SELECT * FROM tbbuku'));
+  $jmlhalaman=ceil($jmldata / $jmlkolom);
+  header("location: daftar-buku.php");
+  if(isset($_GET['halamanbuku'])){
+    
+    $halamanAktif=$_GET['halamanbuku'];
+  }else{
+    $halamanAktif=1;
+  }
+$awalkolom=($jmlkolom * $halamanAktif) - $jmlkolom;
+
+  
+  $books =query("SELECT * FROM tbbuku ORDER BY idbuku LIMIT $awalkolom,$jmlkolom");
+
+    }
+
+}else{
+
+  $jmlkolom=5;
+  $jmldata=count(query('SELECT * FROM tbbuku'));
+  $jmlhalaman=ceil($jmldata / $jmlkolom);
+  if(isset($_GET['halamanbuku'])){
+
+    $halamanAktif=$_GET['halamanbuku'];
+  }else{
+    $halamanAktif=1;
+  }
+$awalkolom=($jmlkolom * $halamanAktif) - $jmlkolom;
+
+  
+  $books =query("SELECT * FROM tbbuku ORDER BY idbuku LIMIT $awalkolom,$jmlkolom");
+  
+}
+
+
 
 // var_dump($books);
 ?>
@@ -96,7 +143,7 @@ $books=query("SELECT * FROM tbbuku ORDER BY idbuku");
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="../logout.php" class="nav-link">
                 <i class="fas fa-sign-out-alt ml-1"></i>
                 <p>Logout</p>
                 </a>
@@ -115,15 +162,14 @@ $books=query("SELECT * FROM tbbuku ORDER BY idbuku");
         <div class="card">
           <div class="card-header">
             <h3>Daftar Buku</h3>
-
+            <form action="" method="POST"class='float-right'>
             <div class="card-tools mb-4">
               <div class="input-group input-group-sm" style="width: 350px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
+                <input type="text" name="pencarian" class="form-control" placeholder="Search" autocomplete="off">
                 <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
+                  <button type="submit" name="cari" class="btn btn-default"> <i class="fas fa-search"></i>
                   </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -166,9 +212,43 @@ $books=query("SELECT * FROM tbbuku ORDER BY idbuku");
         </div>
         <!-- /.card -->
       </div>
+
+      
+   
     </div>
 
+    <nav aria-label="...">
+          <ul class="pagination pagination-md justify-content-center">
+            <?php if ($halamanAktif > 1) :?>
+              <li class="page-item">
+                <a class="page-link" href="?halamanbuku=<?= $halamanAktif -1; ?>" aria-label="Previous">
+                <?php else : ?>
+                  <li class="page-item disabled">
+                  <a class="page-link" href="?halamanbuku=<?= $halamanAktif -1; ?>" aria-label="Previous">
+            <?php endif ?>
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+            <?php for($i=1; $i <= $jmlhalaman;$i++) : ?>
+                <?php if($i == $halamanAktif) : ?> 
+                  <li class="page-item active"><a class="page-link" href="?halamanbuku=<?= $i; ?>"><?= $i; ?></a></li>
+                  <?php else : ?>
+                    <li class="page-item"><a class="page-link" href="?halamanbuku=<?= $i; ?>"><?= $i; ?></a></li>
+                  <?php endif ?>     
+            <?php endfor ?>
 
+            <?php if($halamanAktif < $jmlhalaman ) : ?>
+              <li class="page-item">
+           <a class="page-link" href="?halamanbuku=<?= $halamanAktif +1; ?>" aria-label="Next">
+              <?php else : ?>
+                <li class="page-item disabled bg-transparent">
+           <a class="page-link" href="?halamanbuku=<?= $halamanAktif +1; ?>" aria-label="Next">
+              <?php endif ?>
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+          </ul>
+        </nav>
 
     <!-- akhir dari daftar buku  -->
    

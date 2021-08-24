@@ -1,8 +1,51 @@
 <?php 
-
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: ../index.php");
+  exit;
+}
   require '../functions.php';
-  $anggota =query("SELECT * FROM tbanggota ORDER BY idanggota");
-// var_dump($anggota);
+  if(isset($_POST['cari'])){
+    $anggota =query("SELECT * FROM tbanggota ORDER BY idanggota");
+     $anggota=cariAnggota($_POST['pencarian']);
+    // echo 'ok';
+    $halamanAktif=1;
+    $jmlhalaman=1;
+      if($_POST['pencarian'] === ''){
+    $jmlkolom=5;
+    $jmldata=count(query('SELECT * FROM tbanggota'));
+    $jmlhalaman=ceil($jmldata / $jmlkolom);
+    header("location: daftar-anggota.php");
+    if(isset($_GET['halaman'])){
+      
+      $halamanAktif=$_GET['halaman'];
+    }else{
+      $halamanAktif=1;
+    }
+  $awalkolom=($jmlkolom * $halamanAktif) - $jmlkolom;
+  
+    
+    $anggota =query("SELECT * FROM tbanggota ORDER BY idanggota LIMIT $awalkolom,$jmlkolom");
+  
+      }
+  
+  }else{
+
+    $jmlkolom=5;
+    $jmldata=count(query('SELECT * FROM tbanggota'));
+    $jmlhalaman=ceil($jmldata / $jmlkolom);
+    if(isset($_GET['halaman'])){
+  
+      $halamanAktif=$_GET['halaman'];
+    }else{
+      $halamanAktif=1;
+    }
+  $awalkolom=($jmlkolom * $halamanAktif) - $jmlkolom;
+  
+    
+    $anggota =query("SELECT * FROM tbanggota ORDER BY idanggota LIMIT $awalkolom,$jmlkolom");
+  }
+  //fitur halaman
 ?>
 
 
@@ -86,13 +129,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./anggota/daftar-anggota.php" class="nav-link active">
+                <a href="./daftar-anggota.php" class="nav-link active">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Daftar Anggota</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="../logout.php" class="nav-link">
                 <i class="fas fa-sign-out-alt ml-1"></i>
                 <p>Logout</p>
                 </a>
@@ -113,21 +156,22 @@
         <div class="card">
           <div class="card-header">
             <h3>Daftar Anggota</h3>
-
+              <form action="" method="POST" class="float-right">
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 350px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                <input type="text" name="pencarian" class="form-control " placeholder="Search">
 
                 <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
+                  <button type="submit" class="btn btn-default" name="cari">
                     <i class="fas fa-search"></i>
                   </button>
+                  </form>
                 </div>
               </div>
             </div>
-            <a href="./tambah-anggota.php"><button type="button" class="btn btn-primary">Tambah Anggota <i class="fas fa-plus pl-2" ></i></button></a>
-
+            <a href="./tambah-anggota.php"><button type="button" class="btn btn-primary">Tambah Anggota <i class="fas fa-plus pl-2" ></i></button></a>       
           </div>
+          
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
@@ -149,11 +193,11 @@
 
               <?php foreach ($anggota as $m) : ?>
                 <tr>
-                  <td><?= $m['idanggota']; ?></td>
-                  <td><?= $m['nama']; ?></td>
+                  <td><?= ucfirst($m['idanggota']); ?></td>
+                  <td><?= ucfirst($m['nama']); ?></td>
                   <td><?= $m['jeniskelamin']; ?></td>
                   <td><?= $m['alamat']; ?></td>
-                  <td><img src="../asset/img/person.png" style="width: 30px;" alt=""></td>
+                  <td><img src="../asset/img/<?= $m['foto']; ?>" style="width: 30px;" alt=""></td>
                   <td>
                   <a href="edit-anggota.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-success btn-sm">Edit</button></a>
                   <a href=""><button type="button" class="btn btn-secondary btn-sm">Cetak Kartu</button></a>
@@ -165,11 +209,46 @@
                 
               </tbody>
             </table>
+            
           </div>
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
+          
+        <nav aria-label="...">
+          <ul class="pagination pagination-md justify-content-center">
+            <?php if ($halamanAktif > 1) :?>
+              <li class="page-item">
+                <a class="page-link" href="?halaman=<?= $halamanAktif -1; ?>" aria-label="Previous">
+                <?php else : ?>
+                  <li class="page-item disabled">
+                  <a class="page-link" href="?halaman=<?= $halamanAktif -1; ?>" aria-label="Previous">
+            <?php endif ?>
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+            <?php for($i=1; $i <= $jmlhalaman;$i++) : ?>
+                <?php if($i == $halamanAktif) : ?> 
+                  <li class="page-item active"><a class="page-link" href="?halaman=<?= $i; ?>"><?= $i; ?></a></li>
+                  <?php else : ?>
+                    <li class="page-item"><a class="page-link" href="?halaman=<?= $i; ?>"><?= $i; ?></a></li>
+                  <?php endif ?>     
+            <?php endfor ?>
+
+            <?php if($halamanAktif < $jmlhalaman ) : ?>
+              <li class="page-item">
+           <a class="page-link" href="?halaman=<?= $halamanAktif +1; ?>" aria-label="Next">
+              <?php else : ?>
+                <li class="page-item disabled bg-transparent">
+           <a class="page-link" href="?halaman=<?= $halamanAktif +1; ?>" aria-label="Next">
+              <?php endif ?>
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+          </ul>
+        </nav>
       </div>
+      
     </div>
 
 

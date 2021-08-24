@@ -1,4 +1,9 @@
 <?php 
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: .../index.php");
+  exit;
+}
   require '../functions.php';
   $idanggota=$_GET['idanggota'];
 
@@ -11,7 +16,11 @@
     document.location.href ='daftar-anggota.php';
     </script>";
     }else{
-    echo "<script>alert('Data Gagal Di Ubah');</script>";
+    echo "<script>
+              alert('Data Gagal Di Ubah');
+              document.location.href ='edit-anggota.php';
+        </script>";
+    
     }
  }
 
@@ -107,7 +116,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="../logout.php" class="nav-link">
                 <i class="fas fa-sign-out-alt ml-1"></i>
                 <p>Logout</p>
                 </a>
@@ -139,9 +148,10 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="" method="POST">
+              <form action="" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
+                    <input type="hidden" name="fotolama" value="<?= $m['foto']; ?>">
                     <label for="idanggota">ID Anggota</label>
                     <input type="text" class="form-control" id="idbuku" name="idanggota" value="<?= $m['idanggota']; ?>" readonly>
                   </div>
@@ -164,8 +174,9 @@
                     <input type="text" class="form-control" id="alamat" placeholder="Masukan Penulis Buku" name="alamat" required value="<?= $m['alamat']; ?>">
                   </div>
                   <div class="form-group">
-                    <label for="">Foto</label><br>
-                    <input type="file"  id="foto" placeholder="Masukan foto Buku" name="foto">
+                  <img src="../asset/img/<?= $m['foto']; ?>" alt="" class="ml-3  img-preview" width="60px" style="display: block;" >                    <label for="">Foto</label><br>
+                  <input type="file" id="foto" name="foto" onchange="previewimage()" class="gambar-uploud">
+                    <p class="text-muted">File harus PNG,JPEG,JPG</p>
                   </div>                  
                   <button type="submit" class="btn btn-primary" name="edit">Simpan</button>
                 </div>
@@ -178,7 +189,7 @@
 </div>
 
 
-
+<script src="../asset/js/myscript.js"></script>
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
