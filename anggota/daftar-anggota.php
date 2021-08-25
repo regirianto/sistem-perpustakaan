@@ -54,7 +54,7 @@ if(!isset($_SESSION["login"])){
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Sistem Perpustakaan</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -76,6 +76,10 @@ if(!isset($_SESSION["login"])){
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -160,16 +164,18 @@ if(!isset($_SESSION["login"])){
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 350px;">
                 <input type="text" name="pencarian" class="form-control " placeholder="Search">
-
+                
                 <div class="input-group-append">
                   <button type="submit" class="btn btn-default" name="cari">
                     <i class="fas fa-search"></i>
                   </button>
-                  </form>
-                </div>
+                </form>
               </div>
             </div>
-            <a href="./tambah-anggota.php"><button type="button" class="btn btn-primary">Tambah Anggota <i class="fas fa-plus pl-2" ></i></button></a>       
+          </div>
+          <a href="./tambah-anggota.php"><button type="button" class="btn btn-primary">Tambah Anggota <i class="fas fa-plus pl-2" ></i></button></a>       
+          <a href="./cetak-anggota.php"><button type="button" class="btn btn-warning text-dark">Cetak Daftar Anggota <i class="bi bi-printer"></i></button></a>
+            
           </div>
           
           <!-- /.card-header -->
@@ -180,7 +186,7 @@ if(!isset($_SESSION["login"])){
               
                 <tr>
                   <th>ID Anggota</th>
-                  <th>Nama</th>
+                  <th >Nama</th>
                   <th>Jenis Kelamin</th>
                   <th>Alamat</th>
                   <th>Foto</th>
@@ -194,13 +200,13 @@ if(!isset($_SESSION["login"])){
               <?php foreach ($anggota as $m) : ?>
                 <tr>
                   <td><?= ucfirst($m['idanggota']); ?></td>
-                  <td><?= ucfirst($m['nama']); ?></td>
+                  <td ><?= ucfirst($m['nama']); ?></td>
                   <td><?= $m['jeniskelamin']; ?></td>
                   <td><?= $m['alamat']; ?></td>
                   <td><img src="../asset/img/<?= $m['foto']; ?>" style="width: 30px;" alt=""></td>
                   <td>
                   <a href="edit-anggota.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-success btn-sm">Edit</button></a>
-                  <a href=""><button type="button" class="btn btn-secondary btn-sm">Cetak Kartu</button></a>
+                  <a href="./anggota-detail.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-secondary btn-sm">Cetak Kartu</button></a>
                   <a href="hapus-anggota.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
                 </td>
                 </tr>
