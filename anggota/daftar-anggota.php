@@ -63,7 +63,7 @@ if(!isset($_SESSION["login"])){
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css"> -->
   <!-- iCheck -->
   <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
@@ -71,13 +71,13 @@ if(!isset($_SESSION["login"])){
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css"> -->
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+  <!-- <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css"> -->
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
   
 </head>
@@ -173,8 +173,8 @@ if(!isset($_SESSION["login"])){
               </div>
             </div>
           </div>
-          <a href="./tambah-anggota.php"><button type="button" class="btn btn-primary">Tambah Anggota <i class="fas fa-plus pl-2" ></i></button></a>       
-          <a href="./cetak-anggota.php"><button type="button" class="btn btn-warning text-dark">Cetak Daftar Anggota <i class="bi bi-printer"></i></button></a>
+          <a href="./tambah-anggota.php" ><button type="button" class="btn btn-primary">Tambah Anggota <i class="fas fa-plus pl-2" ></i></button></a>       
+          <a href="./cetak-anggota.php" target="_blank"><button type="button" class="btn btn-warning text-dark">Cetak Daftar Anggota <i class="bi bi-printer"></i></button></a>
             
           </div>
           
@@ -199,15 +199,15 @@ if(!isset($_SESSION["login"])){
 
               <?php foreach ($anggota as $m) : ?>
                 <tr>
-                  <td><?= ucfirst($m['idanggota']); ?></td>
+                  <td><?= strtoupper($m['idanggota']); ?></td>
                   <td ><?= ucfirst($m['nama']); ?></td>
                   <td><?= $m['jeniskelamin']; ?></td>
                   <td><?= $m['alamat']; ?></td>
                   <td><img src="../asset/img/<?= $m['foto']; ?>" style="width: 30px;" alt=""></td>
                   <td>
                   <a href="edit-anggota.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-success btn-sm">Edit</button></a>
-                  <a href="./anggota-detail.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-secondary btn-sm">Cetak Kartu</button></a>
-                  <a href="hapus-anggota.php?idanggota=<?= $m['idanggota']; ?>"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
+                  <a href="./anggota-detail.php?idanggota=<?= $m['idanggota']; ?>" target="_blank"><button type="button" class="btn btn-secondary btn-sm">Cetak Kartu</button></a>
+                  <a href="hapus-anggota.php?idanggota=<?= $m['idanggota']; ?>" onclick="return confirm('Apakah anda yakin?')"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
                 </td>
                 </tr>
                 <?php endforeach ?>
@@ -276,28 +276,28 @@ if(!isset($_SESSION["login"])){
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
-<script src="../plugins/chart.js/Chart.min.js"></script>
+<!-- <script src="../plugins/chart.js/Chart.min.js"></script> -->
 <!-- Sparkline -->
-<script src="../plugins/sparklines/sparkline.js"></script>
+<!-- <script src="../plugins/sparklines/sparkline.js"></script> -->
 <!-- JQVMap -->
 <script src="../plugins/jqvmap/jquery.vmap.min.js"></script>
 <script src="../plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
 <!-- jQuery Knob Chart -->
 <script src="../plugins/jquery-knob/jquery.knob.min.js"></script>
 <!-- daterangepicker -->
-<script src="../plugins/moment/moment.min.js"></script>
-<script src="../plugins/daterangepicker/daterangepicker.js"></script>
+<!-- <script src="../plugins/moment/moment.min.js"></script> -->
+<!-- <script src="../plugins/daterangepicker/daterangepicker.js"></script> -->
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script> -->
 <!-- Summernote -->
-<script src="../plugins/summernote/summernote-bs4.min.js"></script>
+<!-- <script src="../plugins/summernote/summernote-bs4.min.js"></script> -->
 <!-- overlayScrollbars -->
-<script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script> -->
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
+<!-- <script src="../dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../dist/js/pages/dashboard.js"></script>
+<!-- <script src="../dist/js/pages/dashboard.js"></script> -->
 </body>
 </html>

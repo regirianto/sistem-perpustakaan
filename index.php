@@ -65,6 +65,7 @@ if(isset($_POST['login'])){
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <style>
     .fa-book-reader{
       font-size: 100px;
@@ -88,10 +89,10 @@ if(isset($_POST['login'])){
         </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block mb-3" type="submit" name="login">Masuk</button>
+      <a href="./list-buku.php">Lihat Daftar Buku</a>
     </form>
       </div>
-    </div>
-       
+    </div>    
      </div>
    </div>
   </div>

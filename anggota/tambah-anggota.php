@@ -55,6 +55,7 @@ if(isset($_POST['tambah'])){
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -175,7 +176,7 @@ if(isset($_POST['tambah'])){
                     <label for="foto">Foto</label><br>
                     <input type="file" id="foto" name="foto" onchange="previewimage()" class="gambar-uploud">
                   </div>                  
-                  <button type="submit" class="btn btn-primary" name="tambah">Tambah</button>
+                  <button type="submit" class="btn btn-primary" name="tambah" onclick="return confirm('Apakah anda yakin?')">Tambah</button>
                 </div>
               </div>
             </form>

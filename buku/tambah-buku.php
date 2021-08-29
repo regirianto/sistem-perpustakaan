@@ -17,8 +17,18 @@ if(isset($_POST['tambah'])){
     echo "script>alert('Data Gagal Di tambahkan');</script>";
   }
 }
-// var_dump($books);
+
 ?>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -51,6 +61,7 @@ if(isset($_POST['tambah'])){
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -142,7 +153,7 @@ if(isset($_POST['tambah'])){
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="" method="POST">
+              <form action="" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="idbuku">ID Buku</label>
@@ -164,8 +175,14 @@ if(isset($_POST['tambah'])){
                     <label for="kategori">Kategori Buku</label>
                     <input type="text" class="form-control" id="kategori" placeholder="Masukan Kategori Buku" name="kategori">
                   </div>                  
-                  <button type="submit" class="btn btn-primary" name="tambah">Tambah Buku</button>
+                  <div class="form-group">
+                  <img src="../asset/img/coverbook.png" alt="" class="ml-3  img-preview" width="60px" style="display: block;" >
+                    <label for="cover">Cover Buku</label><br>
+                    <input type="file" id="cover" onchange="previewimage()" name="cover" class="gambar-uploud">
+                  </div>                  
+                  <button type="submit" class="btn btn-primary" name="tambah"onclick="return confirm('Apakah anda yakin?')">Tambah Buku</button>
                 </div>
+              </form>
 
 
 
@@ -209,5 +226,6 @@ if(isset($_POST['tambah'])){
 <script src="../dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dist/js/pages/dashboard.js"></script>
+<script src="../asset/js/myscript.js"></script>
 </body>
 </html>

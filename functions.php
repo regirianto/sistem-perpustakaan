@@ -21,14 +21,16 @@
     return $rows;
   }
 
+
   function tambahBuku($data,$tabel){
     $conn=koneksi();
     $id=htmlspecialchars($data['idbuku']);
     $judul=htmlspecialchars($data['judulbuku']);
     $tahun=htmlspecialchars($data['tahunbuku']);
     $penulis=htmlspecialchars($data['penulisbuku']);
-    $kategori=htmlspecialchars($data['kategori']);  
-    $query = "INSERT INTO $tabel VALUES ('$id','$judul','$tahun','$penulis','$kategori')";
+    $kategori=htmlspecialchars($data['kategori']);
+    $cover=uploadCover();
+    $query = "INSERT INTO $tabel VALUES ('$id','$judul','$tahun','$penulis','$kategori','$cover')";
 
     mysqli_query($conn,$query);
 
@@ -71,6 +73,41 @@
       return $namaFileBaru;
 
   }
+  function uploadCover(){
+    // return false;
+    $namaFile=$_FILES['cover']['name'];
+    $tipeFile=$_FILES['cover']['type'];
+    $ukuranFile=$_FILES['cover']['size'];
+    $error=$_FILES['cover']['error'];
+    $tmpFile=$_FILES['cover']['tmp_name'];
+
+
+    $daftarGambar=['jpg','jpeg','png'];
+    $ekstensifile=explode('.',$namaFile);
+    $ekstensifile=strtolower(end($ekstensifile));
+
+    if($error == 4){
+
+      return 'coverbook.png';
+    }
+
+    if(!in_array($ekstensifile,$daftarGambar)){
+      echo "<script> alert('format foto harus JPG ,JPEG, PNG') </script>";
+      return false;
+    }
+    // if($tipeFile != 'image/jpeg' && $tipeFile != 'image/jpg' && $tipeFile != 'image/png'){
+    //   echo "<script> alert('yang anda upload bukan foto') </script>";
+    //   return false;
+    // }
+
+      //func nama baru untuk nama file
+      $namaFileBaru=uniqid();
+      $namaFileBaru.='.';
+      $namaFileBaru.=$ekstensifile;
+      move_uploaded_file($tmpFile,'../asset/img/'. $namaFileBaru);
+      return $namaFileBaru;
+
+  }
   function tambahAnggota($data){
     $conn=koneksi();
     $id=htmlspecialchars($data['idanggota']);
@@ -93,6 +130,10 @@
 
   function hapusBuku($data,$tabel){
     $conn=koneksi();
+    $buku=query("SELECT cover FROM  $tabel WHERE idbuku='$data'")[0];
+    if($buku['cover'] != 'coverbook.png'){
+      unlink('../asset/img/'.$buku['cover']);
+    }
     $query = "DELETE FROM $tabel WHERE idbuku='$data'";
     mysqli_query($conn,$query);
     echo mysqli_error($conn);
@@ -102,8 +143,12 @@
   function hapusAnggota($data,$tabel){
     $conn=koneksi();
   
-    // $anggota=query("SELECT * FROM tbanggota WHERE idanggota='$data'");
-    // unlink()
+    $anggota=query("SELECT * FROM $tabel WHERE idanggota='$data'")[0];
+      if($anggota['foto'] != 'nofoto.png'){
+        unlink('../asset/img/'.$anggota['foto']);
+      }
+      var_dump($anggota['foto']);
+
     
     
     $query="DELETE FROM $tabel WHERE idanggota='$data'";
@@ -118,8 +163,14 @@
     $judul=htmlspecialchars($data['judulbuku']);
     $tahun=htmlspecialchars($data['tahunbuku']);
     $penulis=htmlspecialchars($data['penulisbuku']);
-    $kategori=htmlspecialchars($data['kategori']);  
-    $query=("UPDATE tbbuku SET judulbuku='$judul',tahunbuku=$tahun,penulisbuku='$penulis',kategori='$kategori' WHERE idbuku='$id'");
+    $kategori=htmlspecialchars($data['kategori']); 
+    $coverLama= htmlspecialchars($data['coverlama']); 
+    if($_FILES['cover']['error'] === 4){
+      $cover=$coverLama;
+    } else{
+      $cover=uploadCover();
+    }
+    $query=("UPDATE tbbuku SET judulbuku='$judul',tahunbuku=$tahun,penulisbuku='$penulis',kategori='$kategori',cover='$cover' WHERE idbuku='$id'");
 
     mysqli_query($conn,$query);
     echo mysqli_error($conn);
@@ -149,7 +200,7 @@
 
 
   function cariBuku($pencarian){
-
+    $conn=koneksi();
       $query="SELECT * FROM tbbuku WHERE 
                       judulbuku LIKE '%$pencarian%' OR 
                       idbuku LIKE '%$pencarian%' OR
@@ -161,7 +212,7 @@
 
   }
   function cariAnggota($pencarian){
-
+    $conn=koneksi();
       $query="SELECT * FROM tbanggota WHERE 
                       nama LIKE '%$pencarian%' OR 
                       idanggota LIKE '%$pencarian%' OR
@@ -173,3 +224,5 @@
   }
 
 ?>
+
+

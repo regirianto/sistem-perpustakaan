@@ -1,5 +1,10 @@
 <?php 
-
+session_start();
+if(!isset($_SESSION["login"])){
+  header("location: ../index.php");
+  exit;
+}
+  
 require '../functions.php';
 $anggota =query("SELECT * FROM tbanggota ORDER BY idanggota");
 
@@ -12,10 +17,12 @@ $anggota =query("SELECT * FROM tbanggota ORDER BY idanggota");
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Perpustakaan</title>
+  <title>Cetak Anggota</title>
+   
 </head>
 <body>
 <h1>Daftar Anggota</h1>
+
    <table style="width: 90%; text-align:left;" border="1">
               <thead >        
                 <tr>

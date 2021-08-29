@@ -84,6 +84,7 @@ $awalkolom=($jmlkolom * $halamanAktif) - $jmlkolom;
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -193,14 +194,14 @@ $awalkolom=($jmlkolom * $halamanAktif) - $jmlkolom;
 
               <?php foreach($books as $book) : ?>
               <tr class="text-center">
-                <td><?= $book['idbuku']; ?></td>
+                <td><?= strtoupper($book['idbuku']); ?></td>
                 <td><?= $book['judulbuku']; ?> </td>
                 <td><?= $book['tahunbuku']; ?></td>
                 <td><?= ucfirst($book['penulisbuku']); ?></td>
-                <td><?= $book['kategori']; ?></td>
+                <td><?= ucfirst($book['kategori']); ?></td>
                 <td class="text-center">
                 <a href="edit-buku.php?idbuku=<?= $book['idbuku']; ?>"><button type="button" class="btn btn-success btn-sm">Edit</button></a>
-                <a href="hapus-buku.php?idbuku=<?= $book['idbuku']; ?>"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
+                <a href="hapus-buku.php?idbuku=<?= $book['idbuku']; ?>" onclick="return confirm('Apakah anda yakin?')"><button type="button" class="btn btn-danger btn-sm">Hapus</button></a>
                 </td>
               </tr>
 

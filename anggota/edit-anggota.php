@@ -57,6 +57,7 @@ if(!isset($_SESSION["login"])){
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -178,7 +179,7 @@ if(!isset($_SESSION["login"])){
                   <input type="file" id="foto" name="foto" onchange="previewimage()" class="gambar-uploud">
                     <p class="text-muted">File harus PNG,JPEG,JPG</p>
                   </div>                  
-                  <button type="submit" class="btn btn-primary" name="edit">Simpan</button>
+                  <button type="submit" class="btn btn-primary" name="edit" onclick="return confirm('Apakah anda yakin?')">Simpan</button>
                 </div>
 
 

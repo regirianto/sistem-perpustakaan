@@ -24,7 +24,7 @@ if(!isset($_SESSION["login"])){
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Perpustakaan</title>
+  <title>Cetak Kartu Anggota</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 </head>
 <body>
@@ -35,12 +35,12 @@ if(!isset($_SESSION["login"])){
       <img src="../asset/img/<?= $m['foto']; ?>" alt="..." width="100%" >
     </div>
     <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Kartu Anggota</h5>
+      <div class="card-body ml-5">
+        <h4 class="card-title">Kartu Anggota</h4>
         <p class="card-text">ID anggota : <?= ucfirst($m['idanggota']); ?></p>
         <p class="card-text">Nama : <?= ucfirst($m['nama']); ?></p>
-        <p class="card-text">jenis Kelamin : <?= ucfirst($m['jeniskelamin']); ?></p>
-        <p class="card-text">Alamat : <?= ucfirst($m['alamat']); ?></p>
+        <p class="card-text">Jenis Kelamin : <?= ucfirst($m['jeniskelamin']); ?></p>
+        <p class="card-text">Alamat : <?= ucwords($m['alamat']); ?></p>
 
       </div>
     </div>
