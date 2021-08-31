@@ -30,6 +30,31 @@
     $penulis=htmlspecialchars($data['penulisbuku']);
     $kategori=htmlspecialchars($data['kategori']);
     $cover=uploadCover();
+      
+
+    if(empty($id) || empty($judul) || empty($tahun) || empty($kategori) ){
+     echo "<script>
+              alert('Field Tidak Boleh Kosong');
+              document.location.href='tambah-buku.php';
+          </script>";
+      return false;    
+    }
+
+    if(strlen($id) > 5 ){
+        echo "<script>
+              alert('Field ID Buku Tidak boleh Lebih dari 5 Karakter');
+              document.location.href='tambah-buku.php';
+          </script>";
+      return false;   
+    }
+
+    if(query("SELECT * FROM $tabel WHERE idbuku= '$id' ")){
+      echo "<script>
+              alert('ID Buku Sudah Di Gunakan');
+              document.location.href='tambah-buku.php';
+          </script>";
+      return false;
+    }
     $query = "INSERT INTO $tabel VALUES ('$id','$judul','$tahun','$penulis','$kategori','$cover')";
 
     mysqli_query($conn,$query);
@@ -119,6 +144,24 @@
     if(!$foto){
       return false;
     } 
+    if(empty($nama) || empty($id) || empty($alamat)){
+         echo "<script>
+                  alert('Field tidak boleh kosong');
+                  document.location.href='./tambah-anggota.php';
+                </script>";
+          return false;
+    }
+      if(query("SELECT * FROM tbanggota WHERE idanggota = '$id'")){
+
+            echo "<script>
+                        alert('ID Sudah Di Gunakan');;
+                        document.location.href='./tambah-anggota.php';
+                  </script>";
+           return false;
+      }
+
+
+   
     $query = "INSERT INTO tbanggota VALUES ('$id','$nama','$jenisKelamin','$alamat','$foto')";
 
     mysqli_query($conn,$query);
@@ -147,7 +190,6 @@
       if($anggota['foto'] != 'nofoto.png'){
         unlink('../asset/img/'.$anggota['foto']);
       }
-      var_dump($anggota['foto']);
 
     
     
@@ -223,6 +265,50 @@
 
   }
 
+
+  function registrasi($data){
+    $conn=koneksi();
+    $userName=htmlspecialchars(strtolower($data['username']));
+    $password1=mysqli_real_escape_string($conn,$data['password1']);
+    $password2=mysqli_real_escape_string($conn,$data['password2']);
+
+
+      if(empty($userName) || empty($password1) || empty($password2) ){
+        echo "<script>
+                alert('Field Tidak Boleh Kosong');
+                document.location.href='register.php';
+              </script>";
+        return false;
+      }
+      if(query("SELECT * FROM tbadmin WHERE username ='$userName'")){
+           echo "<script>
+                alert('Username Sudah Terdafatar');
+                document.location.href='register.php';
+              </script>";
+        return false;
+      }
+      if($password1 !== $password2 ){
+           echo "<script>
+                alert('Konfirmasi Password Salah');
+                document.location.href='register.php';
+              </script>";
+        return false;
+      }
+      if(strlen($password2) < 5){
+            echo "<script>
+                    alert('Password Harus lebih Dari 5 karakter');
+                    document.location.href='register.php';
+                  </script>";
+            return false;
+      }
+
+      $passwordBaru=password_hash($password2,PASSWORD_DEFAULT);
+      
+      $query="INSERT INTO tbadmin VALUES('','$userName','$passwordBaru')";
+      mysqli_query($conn,$query) or die(mysqli_error($conn));
+      return mysqli_affected_rows($conn);
+
+  }
 ?>
 
 

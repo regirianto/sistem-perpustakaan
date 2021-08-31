@@ -9,30 +9,39 @@ if(isset($_SESSION["login"])){
 
 require './functions.php';
 if(isset($_POST['login'])){
-  $conn=koneksi();  
-    $username=$_POST['username'];
+    $conn=koneksi();  
+    $userName=strtolower($_POST['username']);
     $password=$_POST['password'];
-
-    $result=mysqli_query($conn,"SELECT * FROM tbadmin WHERE username = '$username' ");
-
-    if(mysqli_num_rows($result) === 1){
-
-      $row=mysqli_fetch_assoc($result);
-     if($password === $row['password']){
-       $_SESSION["login"]=true;
+    $result=mysqli_query($conn,"SELECT * FROM tbadmin WHERE username = '$userName'");
+    $row=mysqli_fetch_assoc($result);
+    if(empty($password) || empty($userName)){
+           echo "<script>
+                  alert('Field harus di isi ');
+                 </script>";
+    }
+    if(mysqli_num_rows($result) == 1){
+      if(password_verify($password,$row["password"])){
+        $_SESSION["login"]=true;
         header("location: dashboard.php");
-        exit;
+        exit();
+       }else{
+         echo "<script>
+                  alert('Password Salah');
+              </script>";
+       }
+    
 
 
-     }else{
-      echo '<script>alert("anda gagal login");</script>';
-     }
+        
+      }else{
+             echo "<script>
+                  alert('Username Tidak ada');
+                  </script>";
+      }
       
-    }
+    
 
-    else{
-      echo '<script>alert("anda gagal login");</script>';
-    }
+     
 }
 
 ?>
@@ -82,16 +91,17 @@ if(isset($_POST['login'])){
       <form class="shadow-lg p-3 rounded-lg" method="POST" action="">
       <i class="fas fa-book-reader text-primary"></i>
       <h1 class="h3 mb-3 font-weight-normal">Sistem Informasi Perpustakaan</h1>
-      <input type="text" id="username" class="form-control mb-2" placeholder="Username" name="username">
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password">
+      <input type="text" id="username" class="form-control mb-2" placeholder="Username" name="username" required>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
       <div class="checkbox mb-2">
         <label>
         </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block mb-3" type="submit" name="login">Masuk</button>
+      <button class=" btn btn-success btn-block mb-3  "><a href="./register.php" class="text-white">Daftar Admin</a></button>
       <a href="./list-buku.php">Lihat Daftar Buku</a>
     </form>
-      </div>
+  </div>
     </div>    
      </div>
    </div>
